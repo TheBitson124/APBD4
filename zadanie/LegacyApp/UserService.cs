@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LegacyApp
+﻿namespace LegacyApp
 {
     public class UserService
     {
