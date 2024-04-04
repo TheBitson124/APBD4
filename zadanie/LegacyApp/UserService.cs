@@ -1,9 +1,12 @@
-﻿namespace LegacyApp
+﻿using System;
+
+namespace LegacyApp
 {
     public class UserService
     {
         public bool AddUser(string firstName, string lastName, string email, DateTime dateOfBirth, int clientId)
         {
+            //collapse if together
             if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
             {
                 return false;
@@ -13,7 +16,7 @@
             {
                 return false;
             }
-
+            //collapse into one
             var now = DateTime.Now;
             int age = now.Year - dateOfBirth.Year;
             if (now.Month < dateOfBirth.Month || (now.Month == dateOfBirth.Month && now.Day < dateOfBirth.Day)) age--;
@@ -22,10 +25,10 @@
             {
                 return false;
             }
-
+            //clientRepository nie potrzebne
             var clientRepository = new ClientRepository();
             var client = clientRepository.GetById(clientId);
-
+            //change creation
             var user = new User
             {
                 Client = client,
@@ -43,6 +46,7 @@
             {
                 using (var userCreditService = new UserCreditService())
                 {
+                    //change to one line
                     int creditLimit = userCreditService.GetCreditLimit(user.LastName, user.DateOfBirth);
                     creditLimit = creditLimit * 2;
                     user.CreditLimit = creditLimit;
@@ -53,6 +57,7 @@
                 user.HasCreditLimit = true;
                 using (var userCreditService = new UserCreditService())
                 {
+                    //change to one line
                     int creditLimit = userCreditService.GetCreditLimit(user.LastName, user.DateOfBirth);
                     user.CreditLimit = creditLimit;
                 }
